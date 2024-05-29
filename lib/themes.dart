@@ -26,4 +26,24 @@ ThemeData primaryTheme = ThemeData(
     foregroundColor: AppColors.textColor,
     centerTitle: true,
   ),
+
+  textTheme: TextTheme(
+    bodyMedium: TextStyle(
+      color: AppColors.textColor,
+      fontSize: 16,
+      letterSpacing: 1,
+    ),
+    headlineMedium: TextStyle(
+      color: AppColors.titleColor,
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+      letterSpacing: 1,
+    ),
+    titleMedium: TextStyle(
+      color: AppColors.titleColor,
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+      letterSpacing: 2,
+    ),
+  ),
 );
