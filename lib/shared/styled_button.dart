@@ -25,6 +25,7 @@ class StyledButton extends StatelessWidget {
           ),
           borderRadius: const BorderRadius.all(Radius.circular(5)),
         ),
+        child: child,
       ),
     );
   }
