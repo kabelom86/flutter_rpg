@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rpg/models/character.dart';
+import 'package:flutter_rpg/models/vocation.dart';
+import 'package:flutter_rpg/screens/create/vocation_card.dart';
 import 'package:flutter_rpg/shared/styled_button.dart';
 import 'package:flutter_rpg/shared/styled_text.dart';
 import 'package:flutter_rpg/themes.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:uuid/uuid.dart';
+
+var uuid = const Uuid();
 
 class Create extends StatefulWidget {
   const Create({super.key});
@@ -17,25 +23,37 @@ class _CreateState extends State<Create> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _nameController.dispose();
     _sloganController.dispose();
     super.dispose();
   }
 
+  // handling vocation selection
+  Vocation selectedVocation = Vocation.junkie; // default state value
+
+  void updateVocation(Vocation vocation) {
+    setState(() {
+      selectedVocation = vocation;
+    });
+  }
+
   // submit handler
   void handleSubmit() {
     if (_nameController.text.trim().isEmpty) {
-      print('name must not be empty');
+      // TODO: show error dialog
       return;
     }
     if (_sloganController.text.trim().isEmpty) {
-      print('slogan must not be empty');
+      // TODO: show error dialog
       return;
     }
 
-    print(_nameController.text);
-    print(_sloganController.text);
+    characters.add(Character(
+      name: _nameController.text.trim(),
+      slogan: _sloganController.text.trim(),
+      vocation: selectedVocation,
+      id: uuid.v4(),
+    ));
   }
 
   @override
@@ -60,6 +78,7 @@ class _CreateState extends State<Create> {
               child: StyledText('Create a name & slogan for your character'),
             ),
             const SizedBox(height: 30),
+
             // input for name and slogan
             TextField(
               controller: _nameController,
@@ -83,6 +102,50 @@ class _CreateState extends State<Create> {
               ),
             ),
             const SizedBox(height: 30),
+
+            // select a vocation title
+            Center(
+              child: Icon(Icons.code, color: AppColors.primaryColor),
+            ),
+            const Center(
+              child: StyledHeadline('Choose a vocation.'),
+            ),
+            const Center(
+              child: StyledText('This determines your available skills.'),
+            ),
+            const SizedBox(height: 30),
+
+            // vocation card
+            VocationCard(
+                onTap: updateVocation,
+                selected: selectedVocation == Vocation.junkie,
+                vocation: Vocation.junkie),
+            VocationCard(
+                onTap: updateVocation,
+                selected: selectedVocation == Vocation.raider,
+                vocation: Vocation.raider),
+            VocationCard(
+                onTap: updateVocation,
+                selected: selectedVocation == Vocation.ninja,
+                vocation: Vocation.ninja),
+            VocationCard(
+                onTap: updateVocation,
+                selected: selectedVocation == Vocation.wizard,
+                vocation: Vocation.wizard),
+
+            // goodluck message
+
+            Center(
+              child: Icon(Icons.code, color: AppColors.primaryColor),
+            ),
+            const Center(
+              child: StyledHeadline('Good Luck.'),
+            ),
+            const Center(
+              child: StyledText('And enjoy the journey...'),
+            ),
+            const SizedBox(height: 30),
+
             Center(
               child: StyledButton(
                 onPressed: handleSubmit,
