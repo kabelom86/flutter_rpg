@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rpg/models/character.dart';
+import 'package:flutter_rpg/screens/profile/skill_list.dart';
+import 'package:flutter_rpg/screens/profile/stats_table.dart';
+import 'package:flutter_rpg/shared/styled_button.dart';
 import 'package:flutter_rpg/shared/styled_text.dart';
 import 'package:flutter_rpg/themes.dart';
 
@@ -45,10 +48,54 @@ class Profile extends StatelessWidget {
             ),
 
             // weapon and ability
+            const SizedBox(height: 20),
+            Center(child: Icon(Icons.code, color: AppColors.primaryColor)),
+
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16),
+                color: AppColors.secondaryColor.withOpacity(0.5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const StyledHeadline('Slogan'),
+                    StyledText(character.slogan),
+                    const SizedBox(height: 10),
+                    const StyledHeadline('Weapon of Choice'),
+                    StyledText(character.vocation.weapon),
+                    const SizedBox(height: 10),
+                    const StyledHeadline('Unique Ability'),
+                    StyledText(character.vocation.ability),
+                    const SizedBox(height: 10),
+                  ],
+                ),
+              ),
+            ),
 
             // stats & skills
+            Container(
+              alignment: Alignment.center,
+              child: Column(children: [
+                StatsTable(character),
+                SkillList(character),
+              ]),
+            ),
 
             // save button
+            StyledButton(
+                onPressed: () {
+                  // show snackbar
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: const StyledHeadline('Character saved.'),
+                    showCloseIcon: true,
+                    backgroundColor: AppColors.secondaryColor,
+                    duration: const Duration(seconds: 2),
+                  ));
+                },
+                child: const StyledHeadline('save character')),
+            const SizedBox(height: 20),
           ],
         ),
       ),

@@ -3,12 +3,12 @@ import 'package:flutter_rpg/models/stats.dart';
 import 'package:flutter_rpg/models/vocation.dart';
 
 class Character with Stats {
-  // Constructor
+  // constructor
   Character({
     required this.name,
     required this.slogan,
-    required this.id,
     required this.vocation,
+    required this.id,
   });
 
   // fields
@@ -20,14 +20,14 @@ class Character with Stats {
   bool _isFav = false;
 
   // getters
-  bool get isFav => _isFav;
+  get isFav => _isFav;
 
   // methods
   void toggleIsFav() {
     _isFav = !_isFav;
   }
 
-  void updateSkill(Skill skill) {
+  void updateSkills(Skill skill) {
     skills.clear();
     skills.add(skill);
   }
